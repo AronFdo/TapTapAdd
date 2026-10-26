@@ -41,7 +41,7 @@ Phased development plan for the TapTapAdd private pilot. Source of truth for pro
 
 **Done when** CI is green, a Vercel preview shows the gallery in both themes, and a test subdomain resolves to a placeholder site page.
 
-**Status (2026-10-22):** code complete and passing locally (typecheck, lint, unit, build, e2e). Still to do outside the repo: push to GitHub so CI runs, create the hosted Supabase project, connect Vercel with the root and wildcard domains, and run `pnpm db:start` once Docker is available.
+**Status (2026-10-22):** code complete and passing locally (typecheck, lint, unit, build, e2e). Pushed to GitHub, hosted Supabase project created, Vercel connected (2026-10-26). Still to do: confirm CI is green, add the root and wildcard domains in Vercel, and run `pnpm db:start` once Docker is available.
 
 ## Phase 1: Schemas and data
 
@@ -64,7 +64,7 @@ Phased development plan for the TapTapAdd private pilot. Source of truth for pro
 
 **Done when** migrations apply cleanly on a fresh database and the RLS and schema tests pass.
 
-**Status (2026-10-26):** code complete and passing locally (typecheck, lint, unit, schema and RLS tests, build, e2e). Without Docker, the migrations and RLS tests run in PGlite with stand-ins for Supabase's roles and `auth.uid()`. Still to do: run `pnpm db:reset` against local Supabase once Docker is available, then `pnpm db:types` to replace the hand-written `lib/db/types.ts`.
+**Status (2026-10-26):** done. Code passes locally (typecheck, lint, unit, schema and RLS tests, build, e2e). The migration is applied to the hosted pilot project, where anonymous requests can read `public_sites` and are refused on every table. `lib/db/types.ts` is now generated from the hosted project and matched the hand-written version. The migrations and RLS tests run in PGlite with stand-ins for Supabase's roles and `auth.uid()`. `pnpm db:reset` against local Supabase is still worth running once Docker is up, but nothing is blocked on it.
 
 Decisions made in this phase:
 
