@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "../components/ui/ui.css";
+
+@layer base {
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  a {
+    color: var(--link);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+}

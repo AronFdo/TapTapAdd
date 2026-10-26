@@ -1,0 +1,261 @@
+/* App console components. See "The backlit key" and "Other controls" in DESIGN.md. */
+
+@layer components {
+  /* Backlit key */
+  .key {
+    --lift: 4px;
+    --face: var(--key-primary);
+    --face-text: var(--key-text);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 22px;
+    font: 500 var(--text-label) / 1 var(--font-sans);
+    color: var(--face-text);
+    background: var(--face);
+    border: var(--outline) solid var(--key-base);
+    border-radius: var(--radius-capsule);
+    box-shadow:
+      0 var(--lift) 0 var(--key-base),
+      inset 0 2px 0 var(--key-highlight);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      transform var(--duration-release) var(--ease-release),
+      box-shadow 160ms ease-out;
+  }
+
+  .key[data-variant="secondary"] {
+    --face: var(--key-secondary);
+    --face-text: var(--text);
+  }
+  .key[data-variant="accent"] {
+    --face: var(--key-accent);
+  }
+  .key[data-variant="danger"] {
+    --face: var(--key-danger);
+    --face-text: var(--key-danger-text);
+  }
+
+  .key[data-size="sm"] {
+    min-height: 36px;
+    padding: 0 16px;
+  }
+  .key[data-size="lg"] {
+    min-height: 56px;
+    padding: 0 28px;
+    font-size: var(--text-body);
+  }
+
+  .key[data-shape="square"] {
+    border-radius: var(--radius-key);
+  }
+  .key[data-shape="round"] {
+    aspect-ratio: 1;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  @media (hover: hover) {
+    .key:hover:not(:disabled) {
+      --lift: 5px;
+      transform: translateY(-1px);
+    }
+  }
+
+  .key:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: inset 0 2px 4px var(--key-inset);
+    transition-duration: var(--duration-press);
+  }
+
+  .key[aria-pressed="true"],
+  .key[aria-checked="true"] {
+    --face: var(--selected);
+    --face-text: var(--key-text);
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 var(--key-base),
+      0 0 16px var(--glow);
+  }
+
+  .key:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .key:disabled {
+    --face: var(--bg);
+    --face-text: var(--text-muted);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--key-base);
+    cursor: not-allowed;
+  }
+
+  /* Quiet keys are text only: no face, no base */
+  .key[data-variant="quiet"] {
+    --face: transparent;
+    --face-text: var(--text);
+    border-color: transparent;
+    box-shadow: none;
+    padding-inline: 12px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .key[data-variant="quiet"]:hover,
+  .key[data-variant="quiet"]:active {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .key__icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    flex: none;
+  }
+
+  /* Loading: a status light pulses in the icon slot; the key keeps its width */
+  .key__busy {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--face-text);
+    animation: key-busy 1s ease-in-out infinite;
+  }
+  .key__icon .key__busy {
+    position: static;
+    margin: auto;
+  }
+
+  @keyframes key-busy {
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  /* Panels: flat, not pressable */
+  .panel {
+    background: var(--surface);
+    border: var(--outline) solid var(--line);
+    border-radius: var(--radius-panel);
+    padding: 24px;
+  }
+  .panel[data-hero] {
+    /* A single cut corner where the browser supports corner-shape */
+    border-top-right-radius: 16px;
+    corner-top-right-shape: bevel;
+  }
+
+  /* Status light: always paired with text */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: 500 var(--text-label) / var(--text-label--line-height) var(--font-sans);
+  }
+  .status__light {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--off);
+  }
+  .status[data-state="live"] .status__light {
+    background: var(--live);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--live) 70%, transparent);
+  }
+  .status[data-state="draft"] .status__light {
+    background: var(--draft);
+  }
+  .status[data-state="problem"] .status__light {
+    background: var(--error);
+  }
+
+  /* Inputs: recessed into the hull */
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+  .field__label {
+    font: 500 var(--text-label) / var(--text-label--line-height) var(--font-sans);
+  }
+  .field__hint {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+    color: var(--text-muted);
+  }
+  .field__error {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+    color: var(--error-text);
+  }
+  .input {
+    min-height: 44px;
+    padding: 10px 14px;
+    font: inherit;
+    color: var(--text);
+    background: var(--surface);
+    border: var(--outline) solid var(--line);
+    border-radius: var(--radius-input);
+    box-shadow: inset 0 2px 0 var(--input-inset);
+  }
+  .input::placeholder {
+    color: var(--text-muted);
+  }
+  .input:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--error);
+  }
+
+  /* Toast: a capsule that drops in from the top */
+  .toast {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: var(--surface);
+    border: var(--outline) solid var(--line);
+    border-radius: var(--radius-capsule);
+    animation: toast-in var(--duration-reveal) ease-out;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(-16px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .key,
+    .key:hover,
+    .key:active,
+    .key[aria-pressed="true"],
+    .key[aria-checked="true"],
+    .key:disabled {
+      transition: none;
+      transform: none;
+    }
+    .key:active:not(:disabled) {
+      filter: brightness(0.92);
+    }
+    .key__busy {
+      animation: none;
+    }
+    .toast {
+      animation: none;
+    }
+  }
+}

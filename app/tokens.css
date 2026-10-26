@@ -1,0 +1,123 @@
+/*
+ * App design tokens. The only file where raw colour values are allowed.
+ * Documented in DESIGN.md. Each colour is light-dark(light, dark).
+ *
+ * The theme follows the system unless <html data-theme="light|dark"> is set.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Base palette */
+  --deep-space: light-dark(#E8E6F4, #161A40);
+  --hull: light-dark(#F7F6FC, #22275A);
+  --hull-line: light-dark(#C9C6E3, #3B4185);
+  --starlight: light-dark(#1D2150, #F1EEFF);
+  --starlight-soft: light-dark(#545887, #AFAED8);
+  --base: light-dark(#1D2150, #0A0C26);
+  --thruster: light-dark(#FF9A2E, #FFA23A);
+  --comet: light-dark(#FF6F99, #FF7AA2);
+  --beacon: light-dark(#2CB9B3, #74E4E0);
+  /* Beacon for lines and text: light-mode beacon is too pale on deep-space */
+  --beacon-ink: light-dark(#0F7470, #74E4E0);
+  --saturn: light-dark(#F2C141, #F4CB55);
+  --signal-green: light-dark(#239A63, #5ED39A);
+  --alarm: light-dark(#D9363F, #FF5C63);
+
+  /* Semantic tokens: components use these, never the palette directly */
+  --bg: var(--deep-space);
+  --surface: var(--hull);
+  --text: var(--starlight);
+  --text-muted: var(--starlight-soft);
+  --line: var(--hull-line);
+  --key-base: var(--base);
+  --key-primary: var(--thruster);
+  --key-secondary: var(--hull);
+  --key-accent: var(--comet);
+  --key-danger: var(--alarm);
+  /* Text on thruster, comet, beacon, saturn and green keys, in both themes */
+  --key-text: light-dark(#1D2150, #1D2150);
+  --key-danger-text: light-dark(#FFFFFF, #1D2150);
+  --selected: var(--saturn);
+  --focus: var(--beacon-ink);
+  --live: var(--beacon-ink);
+  --link: var(--beacon-ink);
+  --draft: var(--saturn);
+  --off: var(--starlight-soft);
+  --success: var(--signal-green);
+  --error: var(--alarm);
+  --error-text: light-dark(#B0222B, #FF5C63);
+  --glow: light-dark(rgb(242 193 65 / 0.6), rgb(244 203 85 / 0.5));
+  --key-highlight: light-dark(rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.4));
+  --key-inset: light-dark(rgb(29 33 80 / 0.25), rgb(10 12 38 / 0.3));
+  --input-inset: light-dark(rgb(29 33 80 / 0.08), rgb(10 12 38 / 0.35));
+
+  --outline: 2px;
+
+  /* Motion */
+  --ease-release: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-press: 80ms;
+  --duration-release: 140ms;
+  --duration-reveal: 200ms;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Tailwind theme. Utilities only exist for these tokens. */
+@theme {
+  --color-*: initial;
+  --font-*: initial;
+
+  /* Shape: rounded-capsule, rounded-key, rounded-panel, rounded-input, rounded-card */
+  --radius-capsule: 999px;
+  --radius-key: 12px;
+  --radius-panel: 24px;
+  --radius-input: 12px;
+  --radius-card: 16px;
+
+  /* Type scale (1.25 ratio). Display sizes run small because Michroma is wide. */
+  --text-display-xl: 3.0625rem;
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: 0.01em;
+  --text-display-l: 1.9375rem;
+  --text-display-l--line-height: 1.15;
+  --text-display-l--letter-spacing: 0.01em;
+  --text-display-m: 1.5625rem;
+  --text-display-m--line-height: 1.2;
+  --text-display-m--letter-spacing: 0.01em;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.3;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.875rem;
+  --text-label--line-height: 1.4;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.45;
+}
+
+@theme inline {
+  --font-display: var(--font-michroma), "Arial Black", sans-serif;
+  --font-sans: var(--font-jost), "Century Gothic", system-ui, sans-serif;
+
+  /* bg-bg, bg-surface, text-fg, text-muted, border-line, text-link, ... */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-line: var(--line);
+  --color-link: var(--link);
+  --color-focus: var(--focus);
+  --color-selected: var(--selected);
+  --color-success: var(--success);
+  --color-error: var(--error-text);
+  --color-key-base: var(--key-base);
+  --color-key-primary: var(--key-primary);
+  --color-key-accent: var(--key-accent);
+  --color-key-text: var(--key-text);
+}
