@@ -108,6 +108,8 @@ Every portfolio component in `components/site` is registered in `lib/render/regi
 - `description`: one or two sentences the AI reads when choosing layouts
 - `vibes`: which vibes it supports
 - `Component`: the React component
+- `hasContent`: whether the section has anything to show, so empty sections hide
+- `example`: props for the gallery preview and the fixture test
 
 Adding a component means a registry entry, a fixture-based test and a preview in the dev gallery (`/dev/components`). The AI catalogue updates automatically.
 

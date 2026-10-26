@@ -90,6 +90,16 @@ Decisions made in this phase:
 
 **Done when** the fixture profiles render well on mobile across job types, Lighthouse mobile performance is 90 or higher, and you would happily show the result to a colleague.
 
+**Status (2026-10-26):** code complete and passing locally (typecheck, lint, 484 unit tests, build, 14 e2e). Ten components, the registry with `catalogue()`, rules, `defaultLayout`, the Renderer and the Orbit vibe in both themes. Four fixture sites (Jane, Kasun, Amaya, Ruwan) at `/dev/sites/[fixture]`, with theme and accent switches. Still to do: a Lighthouse mobile run on a Vercel preview, and your design review on a real phone.
+
+Decisions made in this phase:
+
+- **Registry entries also carry `hasContent` and `example`.** `hasContent` hides empty sections; `example` drives the gallery preview and the fixture test.
+- **The Renderer filters hidden fields itself**, as well as `public_sites` doing it in SQL, so in-app previews match the live site.
+- **Highlight titles are optional**, so `defaultLayout(jobType, answers)` can place the owner's raw answer without the AI.
+- **Accent is a fill only.** Text on it uses the computed `--vibe-accent-text`; focus rings use `--vibe-text`, because an arbitrary accent can't guarantee contrast against the page.
+- **Vibe palettes live in `lib/render/vibes/`**, the one TypeScript location allowed raw hex, alongside the accent presets for the Phase 4 picker.
+
 ## Phase 3: Extraction
 
 **Goal:** a CV file becomes a validated `Profile` reliably.

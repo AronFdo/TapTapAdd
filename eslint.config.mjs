@@ -31,8 +31,9 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    // Model config, and colour maths that works on user-chosen accent hex values.
-    files: ["lib/ai/models.ts", "lib/color/**"],
+    // Model config, colour maths that works on user-chosen accent hex values,
+    // and vibe palettes, which are to portfolios what app/tokens.css is to the app.
+    files: ["lib/ai/models.ts", "lib/color/**", "lib/render/vibes/**"],
     rules: { "no-restricted-syntax": "off" },
   },
   {

@@ -32,3 +32,15 @@ export function contrastRatio(a: string, b: string): number {
 /** AA thresholds: 4.5 for body text, 3 for large text and UI shapes. */
 export const AA_TEXT = 4.5;
 export const AA_NON_TEXT = 3;
+
+/**
+ * Text colour for a fill such as a user-chosen accent: `preferred` when it
+ * reaches AA, otherwise white or black. One of white and black always reaches
+ * AA, because the worst case for both is about 4.58:1.
+ */
+export function readableTextOn(background: string, preferred: string): string {
+  for (const candidate of [preferred, "#ffffff", "#000000"]) {
+    if (contrastRatio(candidate, background) >= AA_TEXT) return candidate.toLowerCase();
+  }
+  return "#000000";
+}

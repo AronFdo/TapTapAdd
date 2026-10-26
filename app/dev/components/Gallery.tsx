@@ -24,7 +24,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-export function Gallery() {
+export function Gallery({ children }: { children?: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("system");
   const [vibe, setVibe] = useState("Orbit");
   const [publishing, setPublishing] = useState(false);
@@ -134,6 +134,8 @@ export function Gallery() {
           rounded corner elsewhere.
         </p>
       </Panel>
+
+      {children}
     </main>
   );
 }
